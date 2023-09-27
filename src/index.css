@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.red-box {
+  background-color: red;
+  width: 250px;
+  height: 250px;
+  margin: 25px;
+}
