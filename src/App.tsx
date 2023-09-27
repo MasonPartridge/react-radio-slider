@@ -11,6 +11,7 @@ const radioOptions = [
   return (
     <div className="App App-header">
       <ReactRadioSlider onChange={setValue} value={value} radioOptions={radioOptions} optionWidth={300}/>
+      <h1>{value}</h1>
     </div>
   );
 }

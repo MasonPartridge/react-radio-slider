@@ -72,7 +72,6 @@ export default function ReactRadioSlider(props: {
                 handlesRadioOptionClick(index);
               }}
             >
-              <p>{index * optionWidth}</p>
               {radioOption}
             </div>
           );
@@ -86,8 +85,6 @@ export default function ReactRadioSlider(props: {
         value={localValue}
         style={{ width: "100%" }}
       ></input>
-      <h1>{value}</h1>
-      <h1>{localValue}</h1>
     </div>
   );
 }
