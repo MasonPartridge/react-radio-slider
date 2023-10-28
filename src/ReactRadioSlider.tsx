@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect } from "react";
 
-export default function ReactRadioSlider(props: {
+interface ReactRadioSliderProps {
   value: number;
   onChange: (value: number) => void;
   radioOptions: ReactNode[];
@@ -9,7 +9,9 @@ export default function ReactRadioSlider(props: {
   optionHeight?: number;
   max?: number;
   min?: number;
-}) {
+}
+
+export default function ReactRadioSlider(props: ReactRadioSliderProps) {
   const {
     value,
     onChange,
