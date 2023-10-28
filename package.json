@@ -26,7 +26,7 @@
     "component"
   ],
   "author": "Mason Partridge",
-  "license": "ISC",
+  "license": "GNU",
   "bugs": {
     "url": "https://github.com/MasonPartridge/react-radio-slider/issues"
   },
