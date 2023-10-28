@@ -44,7 +44,7 @@ function ReactRadioSlider(props) {
     function handlesRadioOptionClick(index) {
         onChange(Math.round(convertLocalValueToValue(index * optionWidth + optionWidth / 2)));
     }
-    return (react_1.default.createElement("div", { style: { display: "flex", flexDirection: "column" } },
+    return (react_1.default.createElement("div", { style: { display: "flex", flexDirection: "column", width: "100%" } },
         react_1.default.createElement("div", { style: { display: "flex" } }, radioOptions.map((radioOption, index) => {
             return (react_1.default.createElement("div", { style: {
                     width: optionWidth,

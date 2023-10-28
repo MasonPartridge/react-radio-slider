@@ -54,8 +54,8 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
     );
   }
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         {radioOptions.map((radioOption, index) => {
           return (
             <div
