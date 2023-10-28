@@ -1,6 +1,6 @@
 {
   "name": "react-radio-slider",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A react component that allows you to select a value from a range of values using a slider and / or radio buttons.",
   "main": "build/ReactRadioSlider.js",
   "types": "build/ReactRadioSlider.d.ts",
