@@ -1,4 +1,10 @@
-import React, { ReactNode, useState, useEffect } from "react";
+import React, {
+  ReactNode,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 
 interface ReactRadioSliderProps {
   value: number;
@@ -24,10 +30,30 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
   } = props;
   const [sliderPixelWidth, setSliderPixelWidth] = useState(0);
   const [localValue, setLocalValue] = useState(value);
+  const [localOptionWidthAndMargin, setLocalOptionWidthAndMargin] = useState(optionWidth);
+  const [optionsMargin, setOptionsMargin] = useState(0);
+  const sliderRef = useRef<HTMLInputElement>(null);
+
+  const handleSliderSizeChange = useCallback(() => {
+    const newSliderPixelWidth = sliderRef.current?.clientWidth ?? 0;
+    setSliderPixelWidth(newSliderPixelWidth);
+    setLocalOptionWidthAndMargin(newSliderPixelWidth / radioOptions.length);
+    setOptionsMargin(
+      (newSliderPixelWidth - radioOptions.length * optionWidth) /
+        (radioOptions.length - 1)
+    );
+  }, [sliderRef, radioOptions, optionWidth]);
 
   useEffect(() => {
-    setSliderPixelWidth(optionWidth * radioOptions.length);
-  }, [optionWidth, radioOptions.length]);
+    window.addEventListener("resize", handleSliderSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleSliderSizeChange);
+    };
+  }, [handleSliderSizeChange]);
+
+  useEffect(() => {
+    handleSliderSizeChange();
+  }, [handleSliderSizeChange]);
 
   useEffect(() => {
     setLocalValue(
@@ -46,10 +72,12 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
     onChange(Math.round(convertLocalValueToValue(event.target.valueAsNumber)));
   }
 
-  function handlesRadioOptionClick(index: number): void {
+  function handleRadioOptionClick(index: number): void {
     onChange(
       Math.round(
-        convertLocalValueToValue(index * optionWidth + optionWidth / 2)
+        convertLocalValueToValue(
+          index * optionWidth + index * optionsMargin + optionWidth / 2
+        )
       )
     );
   }
@@ -64,14 +92,14 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
                 height: optionHeight ?? "auto",
                 overflow: "hidden",
                 opacity:
-                  localValue > optionWidth * (index + 1) ||
-                  localValue < optionWidth * index
+                  localValue > localOptionWidthAndMargin * (index + 1) ||
+                  localValue < localOptionWidthAndMargin * index
                     ? `${deselectedOpacity ?? "50"}%`
                     : "100%",
               }}
               key={index}
               onClick={() => {
-                handlesRadioOptionClick(index);
+                handleRadioOptionClick(index);
               }}
             >
               {radioOption}
@@ -86,6 +114,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
         onChange={handleSliderChange}
         value={localValue}
         style={{ width: "100%" }}
+        ref={sliderRef}
       ></input>
     </div>
   );
