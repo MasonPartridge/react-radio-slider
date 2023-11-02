@@ -25,12 +25,30 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 function ReactRadioSlider(props) {
-    const { value, onChange, radioOptions, optionWidth, max, min, optionHeight, deselectedOpacity, } = props;
+    const { value, onChange, radioOptions, optionWidth, max, min, optionHeight, deselectedOpacity, gap, } = props;
     const [sliderPixelWidth, setSliderPixelWidth] = (0, react_1.useState)(0);
     const [localValue, setLocalValue] = (0, react_1.useState)(value);
+    const [localOptionWidthAndMargin, setLocalOptionWidthAndMargin] = (0, react_1.useState)(optionWidth);
+    const [optionsMargin, setOptionsMargin] = (0, react_1.useState)(0);
+    const sliderRef = (0, react_1.useRef)(null);
+    const handleSliderSizeChange = (0, react_1.useCallback)(() => {
+        var _a, _b;
+        const newSliderPixelWidth = (_b = (_a = sliderRef.current) === null || _a === void 0 ? void 0 : _a.clientWidth) !== null && _b !== void 0 ? _b : 0;
+        console.log(newSliderPixelWidth);
+        setSliderPixelWidth(newSliderPixelWidth);
+        setLocalOptionWidthAndMargin(newSliderPixelWidth / radioOptions.length);
+        setOptionsMargin((newSliderPixelWidth - radioOptions.length * optionWidth) /
+            (radioOptions.length - 1));
+    }, [sliderRef, radioOptions, optionWidth]);
     (0, react_1.useEffect)(() => {
-        setSliderPixelWidth(optionWidth * radioOptions.length);
-    }, [optionWidth, radioOptions.length]);
+        window.addEventListener("resize", handleSliderSizeChange);
+        return () => {
+            window.removeEventListener("resize", handleSliderSizeChange);
+        };
+    }, [handleSliderSizeChange]);
+    (0, react_1.useEffect)(() => {
+        handleSliderSizeChange();
+    }, [handleSliderSizeChange]);
     (0, react_1.useEffect)(() => {
         setLocalValue((value * sliderPixelWidth) / ((max !== null && max !== void 0 ? max : 100) - (min !== null && min !== void 0 ? min : 0)) + (min !== null && min !== void 0 ? min : 0));
     }, [value, max, min, sliderPixelWidth]);
@@ -39,26 +57,34 @@ function ReactRadioSlider(props) {
         return ((input - _min) * ((max !== null && max !== void 0 ? max : 100) - _min)) / sliderPixelWidth;
     }
     function handleSliderChange(event) {
-        onChange(Math.round(convertLocalValueToValue(event.target.valueAsNumber)));
+        onChange(convertLocalValueToValue(event.target.valueAsNumber));
     }
-    function handlesRadioOptionClick(index) {
-        onChange(Math.round(convertLocalValueToValue(index * optionWidth + optionWidth / 2)));
+    function handleRadioOptionClick(index) {
+        onChange(convertLocalValueToValue(index * optionWidth + index * optionsMargin + optionWidth / 2));
+        console.log("sliderPixelWidth:", sliderPixelWidth);
+        console.log("index:", index);
+        console.log("optionWidth:", optionWidth);
+        console.log("optionsMargin:", optionsMargin);
+        console.log("optionWidth / 2:", optionWidth / 2);
+        console.log("index * optionWidth:", index * optionWidth);
+        console.log("localValue:", index * optionWidth + index * optionsMargin + optionWidth / 2);
+        console.log("convertLocalValueToValue:", convertLocalValueToValue(index * optionWidth + index * optionsMargin + optionWidth / 2));
     }
-    return (react_1.default.createElement("div", { style: { display: "flex", flexDirection: "column", width: "100%" } },
+    return (react_1.default.createElement("div", { style: { display: "flex", flexDirection: "column", width: "100%", gap: gap !== null && gap !== void 0 ? gap : 0 } },
         react_1.default.createElement("div", { style: { display: "flex", justifyContent: "space-between" } }, radioOptions.map((radioOption, index) => {
             return (react_1.default.createElement("div", { style: {
                     width: optionWidth,
                     height: optionHeight !== null && optionHeight !== void 0 ? optionHeight : "auto",
                     overflow: "hidden",
-                    opacity: localValue > optionWidth * (index + 1) ||
-                        localValue < optionWidth * index
+                    opacity: localValue > localOptionWidthAndMargin * (index + 1) ||
+                        localValue < localOptionWidthAndMargin * index
                         ? `${deselectedOpacity !== null && deselectedOpacity !== void 0 ? deselectedOpacity : "50"}%`
                         : "100%",
                 }, key: index, onClick: () => {
-                    handlesRadioOptionClick(index);
+                    handleRadioOptionClick(index);
                 } }, radioOption));
         })),
-        react_1.default.createElement("input", { type: "range", min: "0", max: sliderPixelWidth, onChange: handleSliderChange, value: localValue, style: { width: "100%" } })));
+        react_1.default.createElement("input", { type: "range", min: "0", max: sliderPixelWidth, onChange: handleSliderChange, value: localValue, style: { width: "100%" }, ref: sliderRef })));
 }
 exports.default = ReactRadioSlider;
 //# sourceMappingURL=ReactRadioSlider.js.map

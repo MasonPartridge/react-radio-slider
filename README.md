@@ -34,9 +34,10 @@ Below are the properties that you can pass to `<ReactRadioSlider>`:
 | radioOptions       | ReactNode[]    | Yes      | An array of React nodes that are the options the user can select from.                          |
 | optionWidth        | number         | Yes      | The width of each option.                                                                       |
 | deselectedOpacity  | number         | No       | Opacity of the non-selected items (0-100). Default is 50.                                       |
-| optionHeight       | number         | No       | The height of each option. If not specified, the height will be adjusted automatically.        |
+| optionHeight       | number         | No       | The height of each option. If not specified, the height will be adjusted automatically.         |
 | max                | number         | No       | The maximum value of the slider. The default is 100.                                            |
 | min                | number         | No       | The minimum value of the slider. The default is 0.                                              |
+| gap                | number         | No       | The gap between the radio options and range input                                               |
 
 ## Basic Usage
 
