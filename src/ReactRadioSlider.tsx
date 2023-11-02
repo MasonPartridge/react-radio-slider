@@ -15,6 +15,7 @@ interface ReactRadioSliderProps {
   optionHeight?: number;
   max?: number;
   min?: number;
+  gap?: number;
 }
 
 export default function ReactRadioSlider(props: ReactRadioSliderProps) {
@@ -27,6 +28,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
     min,
     optionHeight,
     deselectedOpacity,
+    gap,
   } = props;
   const [sliderPixelWidth, setSliderPixelWidth] = useState(0);
   const [localValue, setLocalValue] = useState(value);
@@ -36,6 +38,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
 
   const handleSliderSizeChange = useCallback(() => {
     const newSliderPixelWidth = sliderRef.current?.clientWidth ?? 0;
+    console.log(newSliderPixelWidth);
     setSliderPixelWidth(newSliderPixelWidth);
     setLocalOptionWidthAndMargin(newSliderPixelWidth / radioOptions.length);
     setOptionsMargin(
@@ -69,20 +72,26 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
   function handleSliderChange(
     event: React.ChangeEvent<HTMLInputElement>
   ): void {
-    onChange(Math.round(convertLocalValueToValue(event.target.valueAsNumber)));
+    onChange(convertLocalValueToValue(event.target.valueAsNumber));
   }
 
   function handleRadioOptionClick(index: number): void {
     onChange(
-      Math.round(
         convertLocalValueToValue(
           index * optionWidth + index * optionsMargin + optionWidth / 2
         )
-      )
     );
+    console.log("sliderPixelWidth:", sliderPixelWidth)
+    console.log("index:", index)
+    console.log("optionWidth:", optionWidth)
+    console.log("optionsMargin:", optionsMargin)
+    console.log("optionWidth / 2:", optionWidth / 2)
+    console.log("index * optionWidth:", index * optionWidth)
+    console.log("localValue:", index * optionWidth + index * optionsMargin + optionWidth / 2)
+    console.log("convertLocalValueToValue:", convertLocalValueToValue(index * optionWidth + index * optionsMargin + optionWidth / 2))
   }
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: gap ?? 0}}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {radioOptions.map((radioOption, index) => {
           return (
