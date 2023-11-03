@@ -9,6 +9,8 @@ interface ReactRadioSliderProps {
     max?: number;
     min?: number;
     gap?: number;
+    thumb?: ReactNode;
+    slider?: ReactNode;
 }
 export default function ReactRadioSlider(props: ReactRadioSliderProps): React.JSX.Element;
 export {};

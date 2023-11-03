@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const Slider = ({ min, max, onChange, value: propValue, }) => {
+const Slider = ({ min, max, onChange, value: propValue, thumb, slider, }) => {
     const [value, setValue] = (0, react_1.useState)(propValue !== null && propValue !== void 0 ? propValue : min);
     const sliderRef = (0, react_1.useRef)(null);
     const thumbRef = (0, react_1.useRef)(null);
@@ -103,15 +103,27 @@ const Slider = ({ min, max, onChange, value: propValue, }) => {
         }, onMouseDown: handleMouseDown, onTouchStart: handleTouchStart },
         react_1.default.createElement("div", { ref: thumbRef, style: {
                 position: "absolute",
-                top: "-7px",
                 left: `${((value - min) / (max - min)) * 100}%`,
-                width: "20px",
-                height: "20px",
+                zIndex: 1,
+            } }, thumb !== null && thumb !== void 0 ? thumb : (react_1.default.createElement("div", { style: {
+                position: "absolute",
+                top: "-12px",
+                width: "30px",
+                height: "30px",
                 background: "#333",
                 borderRadius: "50%",
-                cursor: "grab",
                 transform: "translate(-50%)",
-            } })));
+                cursor: "grab",
+            } }))), slider !== null && slider !== void 0 ? slider : (react_1.default.createElement("div", { style: {
+            position: "absolute",
+            top: "-5px",
+            left: "0",
+            width: "100%",
+            height: "15px",
+            background: "transparent",
+            borderRadius: "5px",
+            cursor: "pointer",
+        } }))));
 };
 exports.default = Slider;
 //# sourceMappingURL=Slider.js.map
