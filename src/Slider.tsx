@@ -1,15 +1,12 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface SliderProps {
   min: number;
   max: number;
   onChange: (value: number) => void;
   value?: number;
+  thumb?: React.ReactNode;
+  slider?: React.ReactNode;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -17,6 +14,8 @@ const Slider: React.FC<SliderProps> = ({
   max,
   onChange,
   value: propValue,
+  thumb,
+  slider,
 }) => {
   const [value, setValue] = useState<number>(propValue ?? min);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -126,16 +125,24 @@ const Slider: React.FC<SliderProps> = ({
         ref={thumbRef}
         style={{
           position: "absolute",
-          top: "-7px",
           left: `${((value - min) / (max - min)) * 100}%`,
-          width: "20px",
-          height: "20px",
-          background: "#333",
-          borderRadius: "50%",
-          cursor: "grab",
-          transform: "translate(-50%)",
         }}
-      />
+      > 
+      { thumb ?? (
+        <div
+          style={{
+            position: "absolute",
+            top: "-12px",
+            width: "30px",
+            height: "30px",
+            background: "#333",
+            borderRadius: "50%",
+            transform: "translate(-50%)",
+            cursor: "grab",
+          }}
+        />
+      )}
+      </div>
     </div>
   );
 };

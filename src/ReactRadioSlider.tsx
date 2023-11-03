@@ -14,6 +14,7 @@ interface ReactRadioSliderProps {
   max?: number;
   min?: number;
   gap?: number;
+  thumb?: ReactNode;
 }
 
 export default function ReactRadioSlider(props: ReactRadioSliderProps) {
@@ -27,6 +28,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
     optionHeight,
     deselectedOpacity,
     gap,
+    thumb
   } = props;
 
   const handleSliderChange = (newValue: number) => {
@@ -64,6 +66,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
         max={max ?? 100}
         onChange={handleSliderChange}
         value={value}
+        thumb={thumb}
       />
     </div>
   );
