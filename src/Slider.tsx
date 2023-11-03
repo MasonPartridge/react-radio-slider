@@ -126,23 +126,38 @@ const Slider: React.FC<SliderProps> = ({
         style={{
           position: "absolute",
           left: `${((value - min) / (max - min)) * 100}%`,
+          zIndex: 1,
         }}
-      > 
-      { thumb ?? (
+      >
+        {thumb ?? (
+          <div
+            style={{
+              position: "absolute",
+              top: "-12px",
+              width: "30px",
+              height: "30px",
+              background: "#333",
+              borderRadius: "50%",
+              transform: "translate(-50%)",
+              cursor: "grab",
+            }}
+          />
+        )}
+      </div>
+      {slider ?? (
         <div
           style={{
             position: "absolute",
-            top: "-12px",
-            width: "30px",
-            height: "30px",
-            background: "#333",
-            borderRadius: "50%",
-            transform: "translate(-50%)",
-            cursor: "grab",
+            top: "-5px",
+            left: "0",
+            width: "100%",
+            height: "15px",
+            background: "transparent",
+            borderRadius: "5px",
+            cursor: "pointer",
           }}
         />
       )}
-      </div>
     </div>
   );
 };

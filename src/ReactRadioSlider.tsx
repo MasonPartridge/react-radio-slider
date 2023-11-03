@@ -1,7 +1,7 @@
 import React, {
   ReactNode,
 } from "react";
-import Slider from "./Slider";
+import Slider from './Slider';
 import Radio from "./Radio";
 
 interface ReactRadioSliderProps {
@@ -15,6 +15,7 @@ interface ReactRadioSliderProps {
   min?: number;
   gap?: number;
   thumb?: ReactNode;
+  slider?: ReactNode;
 }
 
 export default function ReactRadioSlider(props: ReactRadioSliderProps) {
@@ -28,7 +29,8 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
     optionHeight,
     deselectedOpacity,
     gap,
-    thumb
+    thumb,
+    slider,
   } = props;
 
   const handleSliderChange = (newValue: number) => {
@@ -67,6 +69,7 @@ export default function ReactRadioSlider(props: ReactRadioSliderProps) {
         onChange={handleSliderChange}
         value={value}
         thumb={thumb}
+        slider={slider}
       />
     </div>
   );
